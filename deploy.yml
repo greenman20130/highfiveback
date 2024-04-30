@@ -1,0 +1,36 @@
+version: '3.9'
+networks:
+  net:
+    name: net
+    external: true
+
+services:
+  back:
+    image: docker.infra.cloveri.com/cloveri.start/poll/hr-back:latest
+    container_name: hr_back
+    pull_policy: always
+    restart: unless-stopped
+    tmpfs: /tmp
+    networks:
+      - net
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.back.entrypoints=http
+      - traefik.http.routers.back.rule=Host(`${DOMAIN_NAME}`)
+      - traefik.http.routers.back.service=back
+      - traefik.http.services.back.loadbalancer.server.port=8000
+      - "traefik.http.middlewares.corss.headers.accessControlAllowMethods=*"
+      - "traefik.http.middlewares.corss.headers.accessControlAllowHeaders=*"
+      - "traefik.http.middlewares.corss.headers.accessControlAllowOriginList=https://opros.skroy.ru,https://api.opros.skroy.ru,https://localhost:5173"
+      # "traefik.http.middlewares.corss.headers.accessControlAllowOriginList=*"
+      # "traefik.http.middlewares.corss.headers.allowedHosts=*"
+      - traefik.http.middlewares.corss.headers.accessControlMaxAge=100
+      - traefik.http.middlewares.corss.headers.addvaryHeader=true
+      - traefik.http.middlewares.corss.headers.accessControlAllowCredentials=true
+      - traefik.http.routers.back.middlewares=corss
+      # "traefik.http.middlewares.cors.headers.customResponseHeaders.Access-Control-Allow-Origin=https://opros.skroy.ru,https://api.opros.skroy.ru,https://localhost:5173"
+      # "traefik.http.middlewares.cors.headers.customResponseHeaders.Access-Control-Allow-Origin=https://opros.skroy.ru,https://api.opros.skroy.ru,https://localhost:5173"
+      # "traefik.http.middlewares.cors.headers.customResponseHeaders.Access-Control-Allow-Credentials=true"
+      # "traefik.http.middlewares.cors.headers.customResponseHeaders.Access-Control-Allow-Headers=*"
+      # "traefik.http.middlewares.cors.headers.customResponseHeaders.Access-Control-Allow-Methods=*"
+      # "traefik.http.routers.back.middlewares=cors"

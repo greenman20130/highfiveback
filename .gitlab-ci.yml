@@ -1,0 +1,90 @@
+stages:
+  - test
+  - build
+  - deploy
+
+.docker-login: &docker-login
+  - >
+    export CI_REGISTRY_IMAGE=$(echo $CI_REGISTRY_IMAGE |
+    sed -r "s/(.*):8090(.*)/\1\2/")
+  - >
+    export CI_REGISTRY=$(echo $CI_REGISTRY |
+    sed -r "s/(.*):8090(.*)/\1\2/")
+  - >
+    docker login
+    -u $CI_REGISTRY_USER
+    -p $CI_REGISTRY_PASSWORD
+    $CI_REGISTRY
+
+test-run:
+  stage: test
+  tags: [docker]
+  rules:
+    - if: $CI_COMMIT_BRANCH != "dev"
+      changes:
+        - "**/*.py"
+        - "requirements/base.txt"
+  variables:
+    BUILD_VERSION: $CI_COMMIT_SHORT_SHA
+  before_script:
+    - *docker-login
+    - docker pull $CI_REGISTRY_IMAGE:latest
+  script:
+    - >
+      docker build --cache-from $CI_REGISTRY_IMAGE:latest
+      --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+      --build-arg BUILD_VERSION=${BUILD_VERSION} .
+    - >
+      EXPOSED_PORT=$(docker inspect --format='{{.Config.ExposedPorts}}'
+      $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA |
+      grep -Eo '[0-9]{4}')
+    - >
+      docker run -d --rm
+      -p 127.0.0.88:8888:$EXPOSED_PORT
+      --name $CI_PROJECT_NAME.$CI_COMMIT_SHORT_SHA
+      $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    - sleep 5
+    - curl --retry 5 --retry-max-time 10 -f 127.0.0.88:8888/ || EXIT_CODE=$?
+    - docker logs $CI_PROJECT_NAME.$CI_COMMIT_SHORT_SHA || true
+    - docker stop $CI_PROJECT_NAME.$CI_COMMIT_SHORT_SHA
+    - exit $EXIT_CODE
+  after_script:
+    - if [ $(df / --output='pcent' | grep -o "[0-9]*") -gt 80 ]; then docker system prune -f; fi
+
+build-image:
+  stage: build
+  tags: [docker]
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+  variables:
+    BUILD_VERSION: $CI_COMMIT_SHORT_SHA
+  retry: 2
+  before_script:
+    - *docker-login
+    - docker pull $CI_REGISTRY_IMAGE:latest
+    - docker tag $CI_REGISTRY_IMAGE:latest $CI_REGISTRY_IMAGE:old
+    - docker push $CI_REGISTRY_IMAGE:old
+  script:
+    - >
+      docker build --cache-from $CI_REGISTRY_IMAGE:old
+      --tag $CI_REGISTRY_IMAGE:latest
+      --build-arg BUILD_VERSION=${BUILD_VERSION} .
+    - docker push $CI_REGISTRY_IMAGE:latest
+
+deploy-job:
+  tags: [dev-shell]
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+  variables:
+    DOMAIN_NAME: api.opros.skroy.ru
+  before_script:
+    - *docker-login
+  script:
+    - docker compose -f deploy.yml -p opros up -d
+    - sleep 10
+    - curl --retry 5 --retry-max-time 20 -f https://$DOMAIN_NAME/
+  after_script:
+    - if [ $(df / --output='pcent' | grep -o "[0-9]*") -gt 80 ]; then docker system prune -f; fi
+    - docker compose -f deploy.yml -p opros logs || true
+
