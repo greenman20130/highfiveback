@@ -1,59 +1,35 @@
-# Versions
-ARG PYTHON=python:3.10-alpine
-## Stage one ##
-FROM $PYTHON AS build
-WORKDIR /usr/app
-ARG BUILD_VERSION
+FROM python:3.11
 
-# Установка C зависимостей
-RUN apk add --no-cache --update \
-            gcc \
-            libc-dev \
-            linux-headers \
-            postgresql-dev \
-            libusb-dev \
-            libffi-dev
+RUN apt update \
+    && apt upgrade -y \
+    && apt install -y curl \
+        locales \
+    && rm -rf /var/lib/apt/lists/* \
+    && sed -i -e 's/# ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/' /etc/locale.gen \
+    && locale-gen
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+RUN pip3 install --no-cache-dir --upgrade pip \
+    && pip install poetry
+RUN pip install python-dotenv
+RUN pip install uvicorn
+RUN pip install greenlet
+RUN apt-get update
+RUN apt-get install -y ffmpeg libsm6 libxext6
 
-# Установка зависимостей python
-RUN python3 -m venv /usr/app/venv
-ENV PATH="/usr/app/venv/bin:$PATH"
-COPY requirements/base.txt ./requirements.txt
-RUN pip install -r requirements.txt
+ENV POETRY_VIRTUALENVS_CREATE=false
 
-## Stage two ##
-FROM $PYTHON
-ARG BUILD_VERSION
+WORKDIR /app
+COPY pyproject.toml .
+COPY poetry.lock .
 
-# Установка зависимостей C, создание пользователя
-RUN apk add --no-cache libusb-dev \
- && adduser -D cobra \
- && mkdir /usr/app \
- && chown cobra:cobra /usr/app
-WORKDIR /usr/app
+RUN poetry install --no-dev || poetry install
 
-# Подготовка кода и окружения
-COPY --chown=cobra:cobra --from=build /usr/app/venv ./venv
-COPY --chown=cobra:cobra /src ./src
+COPY . /app/highfiveback/.
+#COPY .env /app/highfiveback/.
+WORKDIR /app/highfiveback
 
-# Settings
-USER cobra
-ENV PATH="/usr/app/venv/bin:$PATH"
-EXPOSE 8000
+VOLUME /app/highfiveback/research_data
 
-# Переменные среды
-ENV BUILD_VERSION=${BUILD_VERSION:-noversion}
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+EXPOSE 7999
 
-# Metadata
-LABEL app.version="${BUILD_VERSION}"
-
-# Запуск
-ENTRYPOINT ["uvicorn", "src.main:app", "--host", "0.0.0.0"]
-CMD ["--port", "8000", "--proxy-headers"]
-HEALTHCHECK --interval=7s --timeout=3s --start-period=60s \
-        CMD wget --no-verbose --tries=1 --spider http://localhost:8000/ping
-
+CMD ["uvicorn src.main:app --host 127.0.0.1 --port 7999"]
