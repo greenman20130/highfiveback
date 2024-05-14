@@ -23,6 +23,8 @@ COPY pyproject.toml .
 COPY poetry.lock .
 
 RUN poetry install --no-dev || poetry install
+RUN poetry add strenum
+RUN poetry add python-multipart
 
 COPY . /app/highfiveback/.
 #COPY .env /app/highfiveback/.
