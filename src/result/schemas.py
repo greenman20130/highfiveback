@@ -6,12 +6,11 @@ from datetime import datetime
 
 
 class ResultCreateUpdate(BaseModel):
-    userId: UUID
-    companyId: UUID
-    sessionId: UUID
     pollId: UUID
-    answerId:UUID
-    result: dict
+    pollName: str
+    templateId: UUID
+    userId: UUID
+    results: dict
 
 class ResultRead(ResultCreateUpdate):
     id: Optional[UUID] = None

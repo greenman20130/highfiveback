@@ -6,13 +6,10 @@ from fastapi.responses import Response
 from src.result.schemas import ResultRead, ResultCreateUpdate
 from src.registry.crud import load_by_id, save_object, load_objects, update_by_id, load_counts
 from src.registry.schemas import RegistryType
-from src.config import BASE_REGISTRY_URL, SERVICE_URL
-
 
 router = APIRouter(prefix="/result", tags=["Result"])
-_SERVICE_URL = f"{SERVICE_URL}" #url сервиса опросов
 
-@router.get('/{answer_id}')
+@router.get('/{answer_id}', response_model=ResultCreateUpdate)
 async def get_result_by_answer(answer_id: UUID, response: Response):
     """
     **answer_id** - UUID ответов, по которым нужно провести подсчет<br>
@@ -20,14 +17,22 @@ async def get_result_by_answer(answer_id: UUID, response: Response):
     для теста b6f824d4-7374-42ef-9f86-44f6da498d02
     """
     answer, status = await load_by_id(answer_id, RegistryType.answer, method_type="result_by_answer")
+    
+
+    # Load the poll from the database based on its ID.
+    poll, status = await load_by_id(answer['pollId'], RegistryType.poll)
+    # Convert the poll dictionary into a plain dictionary.
+    poll = dict(poll)
+    # Extract the poll name from the poll dictionary.
     results = {'pollId':answer['pollId'],
+               'pollName':poll['pollName'],
                'templateId':answer['templateId'],
                'userId':answer['userId'],
                'results':{}}
-    
+
     dict_results = results['results']
     list_answers = answer['answers']
-    list_results= []
+
     for answer_ in list_answers:
         answer_value = answer_['answer'][0]
         if answer_['text'] not in dict_results:

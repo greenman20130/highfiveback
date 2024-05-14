@@ -28,7 +28,8 @@ load_dotenv()
 
 TMP_DIR = os.environ.get('TMP_DIR', '/tmp')
 BASE_REGISTRY_URL = os.environ.get('BASE_REGISTRY_URL', 'http://127.0.0.1:8001/api/')
-SERVICE_URL = os.environ.get('SERVICE_URL', 'https://api.opros.skroy.ru/')
+POLL_SERVICE_URL = os.environ.get('POLL_SERVICE_URL', 'https://api.opros.skroy.ru/')
+USER_SERVICE_URL = os.environ.get('POLL_SERVICE_URL', 'https://api.users.skroy.ru/')
 ALLOWED_ORIGINS = _LOCAL_HOSTS
 origins = os.environ.get("ALLOWED_ORIGINS")
 if origins is not None:

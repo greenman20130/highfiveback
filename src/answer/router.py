@@ -29,23 +29,19 @@ async def post_answers(answers: QuestResult, response: Response):
     date_now = datetime.now(timezone.utc)
 
     poll, status = await load_by_id(answers.pollId, RegistryType.poll)
-    print('ok')
 
     if status == HTTPStatus.OK:
-        print('2')
         if poll.dateStart is None or not poll.active:
-            print('---')
             status = HTTPStatus.CONFLICT
+            
         elif poll.dateEnd is None:
-            print('3')
             if poll.dateStart <= date_now:
-                print('4')
                 id, status = await save_object(answers, RegistryType.answer,
                                                object_item=answers.pollId,
                                                account_id=poll.companyId)
             else:
                 status = HTTPStatus.CONFLICT
-                print('ok')
+
         elif poll.dateStart <= date_now <= poll.dateEnd:
             id, status = await save_object(answers, RegistryType.answer,
                                            object_item=answers.pollId,
@@ -149,7 +145,7 @@ async def get_answer_by_id(answer_id: UUID, response: Response):
 
 @router.get('/company/{company_id}')
 async def get_answers_by_company_id(company_id: UUID, response: Response):
-    quests_result, status = await load_objects(RegistryType.answer, f"?account_id={company_id}")
+    answer, status = await load_by_id(company_id, RegistryType.answer, specific_url='answers/company/'+ str(company_id), method_type='answers_by_company_id')
     if status == HTTPStatus.OK:
-        return quests_result
+        return answer
 

@@ -18,38 +18,6 @@ async def put_poll_answers(poll_id: UUID, poll: PollRead, response: Response):
     **poll** данные измененного опроса<br>
     **returns** статусы операции:<br>
     HTTP_200_OK данные изменены
-    Пример:
-    {
-    "userId": "e937332f-34f2-41f1-868a-1eaa8db789e0",
-    "editorId": "a39ef778-939c-4349-8734-024d971c99da",
-    "companyId": "bd743040-d003-4579-8a34-1da34db38db9",
-    "templateId": "e9834cd5-cb33-4b91-b961-6cba2ae04406",
-    "adminHeading": "string", хуй знает что это
-    "adminDescription": "string", и это
-    "pollName": "Водопьянова",
-    "pollDescription": "тест водопьяновой",
-    "finalHeading": "string", и это
-    "finalDescription": "string", и это
-    "themeColor": "black",
-    "dateStart": "2024-04-29T04:04:23.894Z", дата нача обязательно должна быть меньше текущей
-    "dateEnd": "2024-04-29T04:04:23.894Z", позже текущей иначе нельзя залить ответы
-    "active": true, обязательно true если нужно залить ответ
-    "questions": [ шаблон опроса, он вроде как не сейвится, даже не пытайся, просто вставь то что у меня
-        {
-        "id": 0,
-        "text": "string",
-        "description": "string",
-        "type": "string",
-        "required": true,
-        "options": [
-            {
-            "id": "string",
-            "value": "string"
-            }
-        ]
-        }
-    ]
-    }
     """
     poll.editorId = poll.userId
     old_poll, status = await load_by_id(poll_id, RegistryType.poll)
@@ -129,38 +97,6 @@ async def post_poll(poll: PollCreateUpdate, response: Response):
     **return** Структура опроса в виде JSON + статус 200.
 
     HTTP_200_OK данные изменены
-    Пример:
-    {
-    "userId": "e937332f-34f2-41f1-868a-1eaa8db789e0",
-    "editorId": "a39ef778-939c-4349-8734-024d971c99da",
-    "companyId": "bd743040-d003-4579-8a34-1da34db38db9",
-    "templateId": "e9834cd5-cb33-4b91-b961-6cba2ae04406",
-    "adminHeading": "string", хуй знает что это
-    "adminDescription": "string", и это
-    "pollName": "Водопьянова",
-    "pollDescription": "тест водопьяновой",
-    "finalHeading": "string", и это
-    "finalDescription": "string", и это
-    "themeColor": "black",
-    "dateStart": "2024-04-29T04:04:23.894Z", дата нача обязательно должна быть меньше текущей
-    "dateEnd": "2024-04-29T04:04:23.894Z", позже текущей иначе нельзя залить ответы
-    "active": true, обязательно true если нужно залить ответ
-    "questions": [ шаблон опроса, он вроде как не сейвится, даже не пытайся, просто вставь то что у меня
-        {
-        "id": 0,
-        "text": "string",
-        "description": "string",
-        "type": "string",
-        "required": true,
-        "options": [
-            {
-            "id": "string",
-            "value": "string"
-            }
-        ]
-        }
-    ]
-    }
     """
     user_id = poll.userId
     account_id = poll.companyId
