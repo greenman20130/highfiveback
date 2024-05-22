@@ -3,15 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: uvicorn src.main:app --host 127.0.0.1  --port 7999 --reload
+    command: uvicorn src.main:app
     tty: true
     ports:
-      - "7999:7999"
-    volumes:
-      - ./highfiveback/research_data:/highfiveback/research_data
-    networks:
-      - backend
-  
-
-networks:
-  backend:
+      - "6000:8000"

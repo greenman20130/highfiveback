@@ -32,6 +32,4 @@ WORKDIR /app/highfiveback
 
 VOLUME /app/highfiveback/research_data
 
-EXPOSE 7999
-
-CMD ["uvicorn src.main:app --host 127.0.0.1 --port 7999"]
+CMD ["uvicorn src.main:app"]
