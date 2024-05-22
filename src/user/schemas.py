@@ -3,22 +3,32 @@ from typing import Optional, List
 from uuid import UUID
 from pydantic import BaseModel
 from datetime import datetime
+class UserContact(BaseModel):
+    title: str = 'Phone or email'
+    value: str = '+79000000000 or pupkin@example.com'
+
+class UserInfo(BaseModel):
+    field1: str = 'string1'
+    field2: str = 'string2'
+    field3: str = 'string3'
 
 class UserCreateUpdate(BaseModel):
-    userId: UUID = None
-    companyId: UUID = None #foreignkey
-    accessToken: str = None
-    name: str 
-    lastName: str
-    city: str = None
-    photo: str = None
-    email: str 
-    dateJoined: Optional[datetime] = None
-    hashPassword: str = None
-    isHr: bool 
+    user_id: UUID
+    user_type: str = 'login'
+    login: str = 'login'
+    contact_phone: list[UserContact] 
+    contact_email: list[UserContact]
+    additional_info: list[UserInfo]
+    profile_id: UUID
+    project_id: UUID
+    organization_id: UUID 
+    phone_verified: bool
+    email_verified: bool
+    password: str = 'password'
 
 class UserRead(UserCreateUpdate):
     id: Optional[UUID] = None
+
 
 
 

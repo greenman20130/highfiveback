@@ -240,6 +240,14 @@ async def save_object(data_to_save, obj_type: RegistryType, *,
         data = jsonable_encoder(data_to_save)
         response = requests.post(url=url, json=data)
 
+    elif obj_type in _USER_SERVICE_TYPE:
+        url = _USER_SERVICE_URL
+        url += setting[_ONCE]
+        url = url[0:-1]
+
+        data = jsonable_encoder(data_to_save)
+        response = requests.post(url=url, json=data)
+
     else:
         url = _BASE_URL
         url += setting[_ONCE]
