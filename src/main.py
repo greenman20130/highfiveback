@@ -25,13 +25,13 @@ origins = ALLOWED_ORIGINS.split(';')
 app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_methods=['*'],
                    allow_headers=['*'], allow_credentials=True)
 
-app.include_router(router_poll)
-app.include_router(router_answer)
-app.include_router(router_template)
-app.include_router(router_user)
-app.include_router(router_user_inf)
-app.include_router(router_chat)
-app.include_router(router_company)
+# app.include_router(router_poll)
+# app.include_router(router_answer)
+# app.include_router(router_template)
+# app.include_router(router_user)
+# app.include_router(router_user_inf)
+# app.include_router(router_chat)
+# app.include_router(router_company)
 app.include_router(router_result)
 
 
