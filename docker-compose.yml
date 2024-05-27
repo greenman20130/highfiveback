@@ -1,0 +1,9 @@
+services: 
+ backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: uvicorn src.main:app
+    tty: true
+    ports:
+      - "6000:8000"
