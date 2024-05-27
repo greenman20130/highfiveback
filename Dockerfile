@@ -14,7 +14,6 @@ RUN pip install python-dotenv
 RUN pip install uvicorn
 RUN pip install greenlet
 RUN apt-get update
-RUN apt-get install -y ffmpeg libsm6 libxext6
 
 ENV POETRY_VIRTUALENVS_CREATE=false
 
@@ -30,6 +29,5 @@ COPY . /app/highfiveback/.
 #COPY .env /app/highfiveback/.
 WORKDIR /app/highfiveback
 
-VOLUME /app/highfiveback/research_data
 
 CMD ["uvicorn src.main:app"]

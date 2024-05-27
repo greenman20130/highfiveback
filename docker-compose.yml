@@ -1,9 +1,10 @@
 services: 
- backend:
+ highfive:
     build:
       context: .
       dockerfile: Dockerfile
-    command: uvicorn src.main:app
+    command: uvicorn src.main:app --host 0.0.0.0
     tty: true
     ports:
-      - "6000:8000"
+      - "8000:8000"
+
