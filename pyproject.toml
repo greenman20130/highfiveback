@@ -7,9 +7,13 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-fastapi = "0.104.0"
+fastapi = "^0.110.2"
 uvicorn = "0.23.2"
 requests = "^2.31.0"
+starlette-exporter = "^0.21.0"
+python-dotenv = "^1.0.1"
+strenum = "^0.4.15"
+python-multipart = "^0.0.9"
 
 
 [tool.poetry.group.dev.dependencies]
