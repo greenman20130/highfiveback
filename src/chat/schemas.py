@@ -14,7 +14,6 @@ class ChatCreateUpdate(BaseModel): #анонимный чат
     user: ChatUser
     parent_id: int = None 
     scope: str = 'all, admin, registered'
-    signature: str
 
 class ChatRead(ChatCreateUpdate):
     id: Optional[UUID] = None

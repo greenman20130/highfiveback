@@ -32,6 +32,7 @@ POLL_SERVICE_URL = os.environ.get('POLL_SERVICE_URL', 'https://api.opros.skroy.r
 USER_SERVICE_URL = os.environ.get('USER_SERVICE_URL', 'https://api.users.skroy.ru/')
 COMMENT_SERVICE_URL = os.environ.get('COMMENT_SERVICE_URL', 'https://api.comment.skroy.ru/')
 COMMENT_TOKEN = os.environ.get('COMMENT_TOKEN')
+COMMENT_SERVICE_ID = os.environ.get('COMMENT_SERVICE_ID')
 ALLOWED_ORIGINS = _LOCAL_HOSTS
 origins = os.environ.get("ALLOWED_ORIGINS")
 if origins is not None:

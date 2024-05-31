@@ -14,8 +14,8 @@ from src.company.router import router as router_company
 from src.result.router import router as router_result
 from src.first_init import init_template
 from starlette.middleware.cors import CORSMiddleware
-from starlette_exporter import handle_metrics
-from starlette_exporter import PrometheusMiddleware
+# from starlette_exporter import handle_metrics
+# from starlette_exporter import PrometheusMiddleware
 
 from src.config import ALLOWED_ORIGINS
 
@@ -32,11 +32,12 @@ app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_methods=['*'],
 # app.include_router(router_template)
 # app.include_router(router_user)
 # app.include_router(router_user_inf)
-# app.include_router(router_chat)
 # app.include_router(router_company)
+
+app.include_router(router_chat)
 app.include_router(router_result)
-app.add_middleware(PrometheusMiddleware)
-app.add_route("/metrics", handle_metrics)
+# app.add_middleware(PrometheusMiddleware)
+# app.add_route("/metrics", handle_metrics)
 
 
 
