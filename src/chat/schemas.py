@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from datetime import datetime
 
 class ChatUser(BaseModel):
-    id: int 
+    id: int = None
     external_id: UUID
     first_name: str = None
     last_name: str = None
