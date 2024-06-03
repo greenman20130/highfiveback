@@ -20,7 +20,7 @@ router = APIRouter(prefix="/chat", tags=["Chat"])
 _COMMENT_SERVICE_URL = f'{COMMENT_SERVICE_URL}'
 _COMMENT_SERVICE_ID = f'{COMMENT_SERVICE_ID}'
 
-@router.get("/{service_id}/{data_type}/{item_id}/")
+@router.get("/{data_type}/{item_id}/")
 async def get_chat(response: Response, data_type: UUID, item_id: UUID, 
                        presentation: str =Query('--', enum=['tree', 'flat']), 
                        scope: str = Query('--', enum=['all', 'admin', 'registered']), parent_id: int = Query(None)):
@@ -83,7 +83,7 @@ async def get_chat(response: Response, data_type: UUID, item_id: UUID,
     
     return dialogue
 
-@router.post("/{service_id}/{data_type}/{item_id}/")
+@router.post("/{data_type}/{item_id}/")
 async def post_chat(chat: ChatCreateUpdate, response: Response, data_type: UUID, item_id: UUID): #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     """
     Параметры строки запроса: <br>
@@ -101,18 +101,14 @@ async def post_chat(chat: ChatCreateUpdate, response: Response, data_type: UUID,
     key = f'{str(_COMMENT_SERVICE_ID)}{str(data_type)}{str(item_id)}'
     data['signature'] = hmac.new(bytearray(COMMENT_TOKEN, 'utf-8'), bytearray(key, 'utf-8'), hashlib.sha1).hexdigest()
     url = f'{_COMMENT_SERVICE_URL}{_COMMENT_SERVICE_ID}/{data_type}/{item_id}/'
-    print(url)
-    print(data)
     response = requests.post(url=url, json=data)
-    print('ok')
     obj = response.text
-    print(obj)
     obj = json.loads(obj)
 
     return obj
     
 
-@router.put("/{service_id}/{data_type}/{item_id}/comment_id/")
+@router.put("/{data_type}/{item_id}/comment_id/")
 async def put_chat(chat: ChatCreateUpdate, response: Response, service_id: UUID, data_type: UUID, item_id: UUID, comment_id: UUID):
     data = jsonable_encoder(chat)
     url = f'{_COMMENT_SERVICE_URL}{service_id}/{data_type}/{item_id}/{comment_id}/'
@@ -123,7 +119,7 @@ async def put_chat(chat: ChatCreateUpdate, response: Response, service_id: UUID,
     return obj
 
 
-@router.delete("/{service_id}/{data_type}/{item_id}/comment_id/")
+@router.delete("/{data_type}/{item_id}/comment_id/")
 async def delete_chat(response: Response, service_id: UUID, data_type: UUID, item_id: UUID, comment_id: UUID):
 
     url = f'{_COMMENT_SERVICE_URL}{service_id}/{data_type}/{item_id}/{comment_id}/'

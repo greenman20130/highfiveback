@@ -17,37 +17,61 @@ _USER_SERVICE_URL = USER_SERVICE_URL
 router = APIRouter(prefix="/statistics", tags=["Statistics"])
 
 
-@router.get('/{answer_id}', response_model=ResultCreateUpdate)
+@router.get('/{answer_id}')
 async def get_result_by_answer(answer_id: UUID, response: Response):
     """
     **answer_id** - UUID ответов, по которым нужно провести подсчет<br>
     **return** Список опросов, HTTP_200_OK. При неудаче - статус ошибки.<br>
-    для теста b6f824d4-7374-42ef-9f86-44f6da498d02<br>
+    для теста 731b154e-c3dd-4e62-9c77-b90764e51e9e<br>
     """
-    answer, status = await load_by_id(answer_id, RegistryType.answer, method_type="result_by_answer")
+    url = f'{_POLL_SERVICE_URL}answers/{answer_id}'
+    response = requests.get(url)
+    answer = json.loads(response.text)
 
-    # Load the poll from the database based on its ID.
-    poll, status = await load_by_id(answer['pollId'], RegistryType.poll)
-    # Convert the poll dictionary into a plain dictionary.
+    url = f'{_POLL_SERVICE_URL}polls/{answer["pollId"]}'
+    response = requests.get(url)
+    poll = json.loads(response.text) 
+
     poll = dict(poll)
-    # Extract the poll name from the poll dictionary.
+
     results = {'pollId': answer['pollId'],
                'pollName': poll['pollName'],
                'templateId': answer['templateId'],
                'userId': answer['userId'],
-               'results': {}}
-
-    dict_results = results['results']
+               'points': {}}
+    
+    dict_results = results['points']
     list_answers = answer['answers']
-
     for answer_ in list_answers:
         answer_value = answer_['answer'][0]
         if answer_['text'] not in dict_results:
             dict_results[answer_['text']] = int(answer_value['value'])
         else:
             dict_results[answer_['text']] += int(answer_value['value'])
+    
+    url = f'{_POLL_SERVICE_URL}templates/{answer["templateId"]}'
+    response = requests.get(url)
+    template_key = json.loads(response.text)
+    template_key = json.loads(template_key['templateDescription'].replace("'",'"'))
+    detail_key = template_key['detailResult']
+    global_key = template_key['globalResult']
+    result_for_global = {}
 
-    response.status_code = status
+    for r_key, r_value in dict_results.items():
+        detail_key_cycle = detail_key[r_key]
+        for t_key, t_value in detail_key_cycle.items():
+            if r_value in range(t_value[0], t_value[1]+1):
+                dict_results[r_key] = int(t_key)
+    
+    global_result = 0
+
+    for rg_key, rg_value in dict_results.items():
+        global_result += rg_value
+    
+    for g_key, g_value in global_key.items():
+        if global_result in range(g_value[0], g_value[1]):
+            results['result'] = g_key   
+
     return results
 
 
