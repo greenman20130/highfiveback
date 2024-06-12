@@ -16,7 +16,7 @@ from fastapi.responses import FileResponse, Response
 router = APIRouter(prefix="/answers", tags=["Answer"])
 
 
-@router.post('')
+@router.post("")
 async def post_answers(answers: QuestResult, response: Response):
     """
     Сохранение ответов респондента.<br>
@@ -33,19 +33,19 @@ async def post_answers(answers: QuestResult, response: Response):
     if status == HTTPStatus.OK:
         if poll.dateStart is None or not poll.active:
             status = HTTPStatus.CONFLICT
-            
+
         elif poll.dateEnd is None:
             if poll.dateStart <= date_now:
-                id, status = await save_object(answers, RegistryType.answer,
-                                               object_item=answers.pollId,
-                                               account_id=poll.companyId)
+                id, status = await save_object(
+                    answers, RegistryType.answer, object_item=answers.pollId, account_id=poll.companyId
+                )
             else:
                 status = HTTPStatus.CONFLICT
 
         elif poll.dateStart <= date_now <= poll.dateEnd:
-            id, status = await save_object(answers, RegistryType.answer,
-                                           object_item=answers.pollId,
-                                           account_id=poll.companyId)
+            id, status = await save_object(
+                answers, RegistryType.answer, object_item=answers.pollId, account_id=poll.companyId
+            )
         else:
             status = HTTPStatus.CONFLICT
     response.status_code = status
@@ -59,7 +59,7 @@ async def post_answers(answers: QuestResult, response: Response):
 #     response.status_code = status
 #     return quests_result
 
-#FIX LATER
+# FIX LATER
 # @router.get('/{poll_id}/company/{company_id}/csv')
 # async def get_answers_csv(poll_id: UUID, company_id: UUID, response: Response):
 #     """
@@ -103,7 +103,7 @@ async def post_answers(answers: QuestResult, response: Response):
 
 #         return FileResponse(path=tmp_file.name, filename='data.csv', media_type='application/csv')
 
-#FIX LATER
+# FIX LATER
 # @router.get('/{poll_id}/company/{company_id}/json')
 # async def get_answers_json(poll_id: UUID, company_id: UUID, response: Response):
 #     """
@@ -136,16 +136,20 @@ async def post_answers(answers: QuestResult, response: Response):
 #     return
 
 
-@router.get('/{answer_id}', response_model=QuestResultRead)
+@router.get("/{answer_id}", response_model=QuestResultRead)
 async def get_answer_by_id(answer_id: UUID, response: Response):
     answer, status = await load_by_id(answer_id, RegistryType.answer)
     response.status_code = status
     return answer
 
 
-@router.get('/company/{company_id}')
+@router.get("/company/{company_id}")
 async def get_answers_by_company_id(company_id: UUID, response: Response):
-    answer, status = await load_by_id(company_id, RegistryType.answer, specific_url='answers/company/'+ str(company_id), method_type='answers_by_company_id')
+    answer, status = await load_by_id(
+        company_id,
+        RegistryType.answer,
+        specific_url="answers/company/" + str(company_id),
+        method_type="answers_by_company_id",
+    )
     if status == HTTPStatus.OK:
         return answer
-

@@ -4,14 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('chats', '0003_create_data_gin_and_object_item_idx'),
+        ("chats", "0003_create_data_gin_and_object_item_idx"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='Chat'.lower(),
-            options={'ordering': ['-meta__internal_id']},
+            name="Chat".lower(),
+            options={"ordering": ["-meta__internal_id"]},
         ),
     ]

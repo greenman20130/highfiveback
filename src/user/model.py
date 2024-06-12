@@ -11,15 +11,15 @@ from fastapi import APIRouter, Response, Request
 
 class User(BaseModel):
     user_id: UUID = None
-    company_id: UUID = None #foreignkey
+    company_id: UUID = None  # foreignkey
     access_token: str = None
-    name: str 
+    name: str
     last_name: str
     photo: str = None
-    email: str 
+    email: str
     date_joined: Optional[datetime] = None
     hash_password: str = None
-    is_hr: bool 
+    is_hr: bool
 
     def get_values_from_cookies(self, request: Request):
         user_id = request.cookies.get("userId")
@@ -34,6 +34,7 @@ class User(BaseModel):
         is_hr = request.cookies.get("is_hr")
         return self
 
+
 class Company(BaseModel):
     company_id: UUID = None
     name: str
@@ -41,13 +42,15 @@ class Company(BaseModel):
     website: str = None
     city: str
 
-class Chat(BaseModel): #анонимный чат 
+
+class Chat(BaseModel):  # анонимный чат
     message_id: UUID = None
     text: str
-    sender: UUID = None #foreignkey
-    to: UUID = None #foreignkey
+    sender: UUID = None  # foreignkey
+    to: UUID = None  # foreignkey
     time: Optional[datetime] = None
 
-class Recomendations(BaseModel): #рекомендации в случае выгорания
-    id: int #PK!
+
+class Recomendations(BaseModel):  # рекомендации в случае выгорания
+    id: int  # PK!
     text: str

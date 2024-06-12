@@ -16,19 +16,19 @@ class CustomMetadata(SimpleMetadata):
         at https://github.com/encode/django-rest-framework/issues/3356
         """
         actions = {}
-        for method in {'PUT', 'POST'} & set(view.allowed_methods):
+        for method in {"PUT", "POST"} & set(view.allowed_methods):
             view.request = clone_request(request, method)
             try:
                 # Test global permissions
-                if hasattr(view, 'check_permissions'):
+                if hasattr(view, "check_permissions"):
                     view.check_permissions(view.request)
                 # Test object permissions
-                if method == 'PUT' and hasattr(view, 'get_object'):
+                if method == "PUT" and hasattr(view, "get_object"):
                     # view_type has been added to the viewsets to determine
                     # if the viewset works with single or multiple objects.
                     # This check is skipped for viewset that works with
                     # multiple objects.
-                    if hasattr(view, 'view_type') and getattr(view, 'view_type') == 'multiple_objects':
+                    if hasattr(view, "view_type") and getattr(view, "view_type") == "multiple_objects":
                         pass
                     else:
                         view.get_object()

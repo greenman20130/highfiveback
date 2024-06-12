@@ -21,10 +21,10 @@ class AnswerService:
             "name": f"answer_{object_id}",
             "object_code": f"{object_id}",
             "data": result.model_dump_json(),
-            "object_item": f'{result.pollId}',
+            "object_item": f"{result.pollId}",
         }
 
         response = requests.post(f"{BASE_REGISTRY_URL}answer/", json=answer_data)
-        answer_id = response.json().get('id')
+        answer_id = response.json().get("id")
 
         return Response(answer_id, status_code=response.status_code)

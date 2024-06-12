@@ -27,30 +27,20 @@ class LinkBulkSerializer(serializers.ListSerializer):
             data = html.parse_html_list(data, default=[])
 
         if not isinstance(data, list):
-            message = self.error_messages['not_a_list'].format(
-                input_type=type(data).__name__
-            )
-            raise ValidationError({
-                api_settings.NON_FIELD_ERRORS_KEY: [message]
-            }, code='not_a_list')
+            message = self.error_messages["not_a_list"].format(input_type=type(data).__name__)
+            raise ValidationError({api_settings.NON_FIELD_ERRORS_KEY: [message]}, code="not_a_list")
 
         if not self.allow_empty and len(data) == 0:
-            message = self.error_messages['empty']
-            raise ValidationError({
-                api_settings.NON_FIELD_ERRORS_KEY: [message]
-            }, code='empty')
+            message = self.error_messages["empty"]
+            raise ValidationError({api_settings.NON_FIELD_ERRORS_KEY: [message]}, code="empty")
 
         if self.max_length is not None and len(data) > self.max_length:
-            message = self.error_messages['max_length'].format(max_length=self.max_length)
-            raise ValidationError({
-                api_settings.NON_FIELD_ERRORS_KEY: [message]
-            }, code='max_length')
+            message = self.error_messages["max_length"].format(max_length=self.max_length)
+            raise ValidationError({api_settings.NON_FIELD_ERRORS_KEY: [message]}, code="max_length")
 
         if self.min_length is not None and len(data) < self.min_length:
-            message = self.error_messages['min_length'].format(min_length=self.min_length)
-            raise ValidationError({
-                api_settings.NON_FIELD_ERRORS_KEY: [message]
-            }, code='min_length')
+            message = self.error_messages["min_length"].format(min_length=self.min_length)
+            raise ValidationError({api_settings.NON_FIELD_ERRORS_KEY: [message]}, code="min_length")
 
         ret = []
         errors = []
@@ -58,7 +48,7 @@ class LinkBulkSerializer(serializers.ListSerializer):
         for item in data:
             try:
                 # Code that was inserted
-                self.child.instance = self.instance.get(id=item['id']) if self.instance else None
+                self.child.instance = self.instance.get(id=item["id"]) if self.instance else None
                 self.child.initial_data = item
                 # Until here
                 validated = self.child.run_validation(item)
@@ -105,15 +95,10 @@ class LinkBulkSerializer(serializers.ListSerializer):
         """
         instance_hash = {index: instance for index, instance in enumerate(instances)}
 
-        result = [
-            self.child.update(instance_hash[index], attrs)
-            for index, attrs in enumerate(validated_data)
-        ]
+        result = [self.child.update(instance_hash[index], attrs) for index, attrs in enumerate(validated_data)]
 
         writable_fields = [
-            x
-            for x in self.child.Meta.fields
-            if x not in ['id', 'created_date']  # modified_date has to be updated
+            x for x in self.child.Meta.fields if x not in ["id", "created_date"]  # modified_date has to be updated
         ]
 
         try:
@@ -125,14 +110,9 @@ class LinkBulkSerializer(serializers.ListSerializer):
 
 
 class LinkSerializer(serializers.ModelSerializer):
-    id = serializers.UUIDField(validators=[UniqueValidator(queryset=Link.objects.all())],
-                               allow_null=True)
-    weight = serializers.FloatField(validators=[MinValueValidator(0.0),
-                                                MaxValueValidator(1.0)],
-                                    default=0.0)
-    direction = serializers.IntegerField(validators=[MinValueValidator(0),
-                                                     MaxValueValidator(3)],
-                                         default=1)
+    id = serializers.UUIDField(validators=[UniqueValidator(queryset=Link.objects.all())], allow_null=True)
+    weight = serializers.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)], default=0.0)
+    direction = serializers.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(3)], default=1)
 
     def __init__(self, *args, **kwargs):
         """
@@ -171,12 +151,12 @@ class LinkSerializer(serializers.ModelSerializer):
 
         If a single instance is passed though, it is saved to the database.
         """
-        partial = self.context['request'].method == 'PATCH'
+        partial = self.context["request"].method == "PATCH"
 
         if partial:
             # Get JSON fields from the validated data
-            meta = validated_data.pop('meta', None)
-            data = validated_data.pop('data', None)
+            meta = validated_data.pop("meta", None)
+            data = validated_data.pop("data", None)
 
             # Perform partial update for the JSON fields
             if meta is not None:
@@ -188,7 +168,7 @@ class LinkSerializer(serializers.ModelSerializer):
             for attr, value in validated_data.items():
                 setattr(instance, attr, value)
         else:
-            meta = validated_data.pop('meta', None)  # meta fields should always be preserved
+            meta = validated_data.pop("meta", None)  # meta fields should always be preserved
 
             if meta is not None:
                 instance.meta.update(meta)
@@ -198,17 +178,33 @@ class LinkSerializer(serializers.ModelSerializer):
 
         # Bulk_update in django does not trigger auto_now,
         # so modified date needs to be set explicitly
-        setattr(instance, 'modified_date', timezone.now())
+        setattr(instance, "modified_date", timezone.now())
 
-        if isinstance(self._kwargs['data'], dict):
+        if isinstance(self._kwargs["data"], dict):
             instance.save()
 
         return instance
 
     class Meta:
         model = Link
-        fields = ['id', 'link_type', 'object1', 'object2',
-                  'weight', 'direction', 'created_date', 'modified_date',
-                  'meta', 'data', 'project_id', 'account_id', 'user_id', ]
-        read_only_fields = ['id', 'created_date', 'modified_date',]
+        fields = [
+            "id",
+            "link_type",
+            "object1",
+            "object2",
+            "weight",
+            "direction",
+            "created_date",
+            "modified_date",
+            "meta",
+            "data",
+            "project_id",
+            "account_id",
+            "user_id",
+        ]
+        read_only_fields = [
+            "id",
+            "created_date",
+            "modified_date",
+        ]
         list_serializer_class = LinkBulkSerializer

@@ -22,17 +22,20 @@ async def put_poll_answers(poll_id: UUID, poll: PollRead, response: Response):
     poll.editorId = poll.userId
     old_poll, status = await load_by_id(poll_id, RegistryType.poll)
 
-    
     if status == HTTPStatus.OK:
         poll.userId = old_poll.userId
         if poll.companyId != None:
             account_id = poll.companyId
         else:
             account_id = None
-        status = await update_by_id(poll_id, poll, RegistryType.poll,
-                                    object_item=poll.templateId,
-                                    user_id=old_poll.userId,
-                                    account_id=account_id)
+        status = await update_by_id(
+            poll_id,
+            poll,
+            RegistryType.poll,
+            object_item=poll.templateId,
+            user_id=old_poll.userId,
+            account_id=account_id,
+        )
     response.status_code = status
     return
 
@@ -47,7 +50,7 @@ async def get_poll_for_answers(poll_id: UUID, response: Response):
     poll, status = await load_by_id(poll_id, RegistryType.poll)
     # сбросить Id компании
     # poll.companyId = None
-    
+
     response.status_code = status
 
     return poll
@@ -59,7 +62,7 @@ async def get_polls_by_company(company_id: UUID, response: Response):
     **company_id** - UUID компании, по которой выбирается список опросов<br>
     **return** Список опросов, HTTP_200_OK. При неудаче - статус ошибки.
     """
-    result, status = await load_by_id(company_id, RegistryType.poll, method_type='polls_by_company')
+    result, status = await load_by_id(company_id, RegistryType.poll, method_type="polls_by_company")
 
     response.status_code = status
     return result
@@ -71,7 +74,7 @@ async def get_polls_by_user(user_id: UUID, response: Response):
     **user_id** Идентификатор пользователя<br>
     **return** Список опросов, HTTP_200_OK.
     """
-    result, status = await load_by_id(user_id, RegistryType.poll, method_type='polls_by_user')
+    result, status = await load_by_id(user_id, RegistryType.poll, method_type="polls_by_user")
 
     response.status_code = status
     return result
@@ -84,7 +87,7 @@ async def get_polls_by_template(template_id: UUID, response: Response):
     **return** Список опросов, HTTP_200_OK.
     """
 
-    result, status = await load_by_id(template_id, RegistryType.poll, method_type='polls_by_template')
+    result, status = await load_by_id(template_id, RegistryType.poll, method_type="polls_by_template")
 
     response.status_code = status
     return result
@@ -102,7 +105,8 @@ async def post_poll(poll: PollCreateUpdate, response: Response):
     account_id = poll.companyId
     template_id = poll.templateId
 
-    id, status = await save_object(poll, RegistryType.poll,
-                                   user_id=user_id, account_id=account_id, object_item=template_id)
+    id, status = await save_object(
+        poll, RegistryType.poll, user_id=user_id, account_id=account_id, object_item=template_id
+    )
     response.status_code = status
     return id

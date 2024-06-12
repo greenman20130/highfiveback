@@ -10,5 +10,6 @@ class CompanyCreateUpdate(BaseModel):
     website: str = None
     city: str
 
+
 class CompanyRead(CompanyCreateUpdate):
     id: Optional[UUID] = None

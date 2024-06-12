@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('chats', '0004_alter_chats_options'),
+        ("chats", "0004_alter_chats_options"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='Chat',
-            name='name',
+            model_name="Chat",
+            name="name",
             field=models.CharField(max_length=254, null=True),
         ),
         migrations.AlterField(
-            model_name='Chat',
-            name='object_type',
+            model_name="Chat",
+            name="object_type",
             field=models.CharField(max_length=254, null=True),
         ),
     ]

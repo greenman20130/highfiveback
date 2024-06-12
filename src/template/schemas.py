@@ -18,4 +18,3 @@ class TemplateObject(BaseModel):
 
 class TemplateRead(TemplateObject):
     id: Optional[UUID] = None
-

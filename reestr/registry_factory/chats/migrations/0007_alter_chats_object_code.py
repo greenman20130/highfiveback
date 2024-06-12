@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('chats', '0006_chats_6_new_indexes'),
+        ("chats", "0006_chats_6_new_indexes"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='Chat',
-            name='object_code',
+            model_name="Chat",
+            name="object_code",
             field=models.CharField(max_length=254, null=True, unique=True),
         ),
     ]

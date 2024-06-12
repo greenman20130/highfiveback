@@ -25,5 +25,3 @@
 #     Column("hash_password", String, nullable=False),
 #     Column("is_hr", Boolean, default=False),
 # )
-
-

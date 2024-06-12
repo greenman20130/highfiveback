@@ -2,9 +2,7 @@ from django.core.management.templates import TemplateCommand
 
 
 class Command(TemplateCommand):
-    help = (
-        "Creates a registry from registry_template.zip."
-    )
+    help = "Creates a registry from registry_template.zip."
     missing_args_message = "You must provide an application name."
 
     def handle(self, **options):

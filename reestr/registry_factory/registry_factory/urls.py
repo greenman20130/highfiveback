@@ -24,16 +24,16 @@ from links.views import LinksViewset, LinkViewset
 from chats.views import ChatsViewset, ChatViewset
 
 router = CustomRouter()
-router.register(r'links', LinksViewset, basename='links')
-router.register(r'link', LinkViewset, basename='link')
-router.register(r'chats', ChatsViewset, basename='chats')
-router.register(r'chat', ChatViewset, basename='chat')
+router.register(r"links", LinksViewset, basename="links")
+router.register(r"link", LinkViewset, basename="link")
+router.register(r"chats", ChatsViewset, basename="chats")
+router.register(r"chat", ChatViewset, basename="chat")
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
-    path('swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('info/', views.info),
+    path("admin/", admin.site.urls),
+    path("api/", include(router.urls)),
+    path("swagger-ui/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("info/", views.info),
 ]

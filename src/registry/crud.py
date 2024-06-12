@@ -19,18 +19,30 @@ import requests
 _BASE_URL = f"{BASE_REGISTRY_URL}"
 
 _POLL_SERVICE_URL = f"{POLL_SERVICE_URL}"  # url готового сервиса опросника
-_POLL_SERVICE_TYPE = [RegistryType.poll, RegistryType.answer, RegistryType.template] # типы опросника
+_POLL_SERVICE_TYPE = [RegistryType.poll, RegistryType.answer, RegistryType.template]  # типы опросника
 
 _USER_SERVICE_URL = f"{USER_SERVICE_URL}"
-_USER_SERVICE_TYPE = [RegistryType.user,] # типы центра пользователей
+_USER_SERVICE_TYPE = [
+    RegistryType.user,
+]  # типы центра пользователей
 second_id = None
 
-_METHOD_TYPE = {'polls_by_company':{'struct':None, 'url':'/company',},
-                'polls_by_user':{'struct':None, 'url':'/user',},
-                'polls_by_template':{'struct':None, 'url':'/template',},
-                'result_by_answer':{'struct':None, 'url':None},
-                'answers_by_company_id':{'struct':None, 'url':None},
-                }
+_METHOD_TYPE = {
+    "polls_by_company": {
+        "struct": None,
+        "url": "/company",
+    },
+    "polls_by_user": {
+        "struct": None,
+        "url": "/user",
+    },
+    "polls_by_template": {
+        "struct": None,
+        "url": "/template",
+    },
+    "result_by_answer": {"struct": None, "url": None},
+    "answers_by_company_id": {"struct": None, "url": None},
+}
 
 
 # class UUIDEncoder(json.JSONEncoder):
@@ -39,12 +51,14 @@ _METHOD_TYPE = {'polls_by_company':{'struct':None, 'url':'/company',},
 #             return str(obj)
 #         return json.JSONEncoder.default(self, obj)
 
-async def load_objects(obj_type: RegistryType, filter_options: str = None) -> (
-        tuple[None, Any] | tuple[str, int] | tuple[None, int]):
+
+async def load_objects(
+    obj_type: RegistryType, filter_options: str = None
+) -> (tuple[None, Any] | tuple[str, int] | tuple[None, int]):
     """Чтение списка объектов из реестра
 
     Returns:
-        object: 
+        object:
     """
     setting = REGISTRY_SETTING.get(obj_type)
 
@@ -61,7 +75,7 @@ async def load_objects(obj_type: RegistryType, filter_options: str = None) -> (
 
     if filter_options is not None:
         url += filter_options
-    
+
     response = requests.get(url)
 
     if obj_type in _POLL_SERVICE_TYPE or _USER_SERVICE_TYPE:
@@ -78,17 +92,17 @@ async def load_objects(obj_type: RegistryType, filter_options: str = None) -> (
                 reg = RegistryRead.model_validate(obj)
                 object_dump = setting[_STRUCT].model_validate(reg.data)
 
-                if hasattr(object_dump, 'id'):
-                    object_dump.id = obj['id']
+                if hasattr(object_dump, "id"):
+                    object_dump.id = obj["id"]
 
-                if hasattr(object_dump, 'companyId'):
-                    object_dump.companyId = obj['account_id']
+                if hasattr(object_dump, "companyId"):
+                    object_dump.companyId = obj["account_id"]
 
-                if hasattr(object_dump, 'userId'):
-                    object_dump.userId = obj['user_id']
+                if hasattr(object_dump, "userId"):
+                    object_dump.userId = obj["user_id"]
 
-                if hasattr(object_dump, 'created_date'):
-                    object_dump.created_date = obj['created_date']
+                if hasattr(object_dump, "created_date"):
+                    object_dump.created_date = obj["created_date"]
 
                 result_list.append(object_dump.model_dump())
             result = (result_list, response.status_code)
@@ -127,7 +141,9 @@ async def load_counts(obj_type: RegistryType, *, limit: int = 1, filter_options:
     return (0, response.status_code)
 
 
-async def load_by_id(obj_id: UUID, obj_type: RegistryType, method_type: str = None, second_id: UUID = None, specific_url: str = None):
+async def load_by_id(
+    obj_id: UUID, obj_type: RegistryType, method_type: str = None, second_id: UUID = None, specific_url: str = None
+):
     """
     Loads an object from the registry.
 
@@ -163,15 +179,15 @@ async def load_by_id(obj_id: UUID, obj_type: RegistryType, method_type: str = No
             # if second_id is not None:
             #     full_url = method_type.get('url')
             #     url = f'{url+full_url[0]}'
-            
-            #else:
-            if method_type.get('url') is not None:
-                url += method_type.get('url')
+
+            # else:
+            if method_type.get("url") is not None:
+                url += method_type.get("url")
 
             # Check if a 'struct' parameter is defined.
-            if 'struct' in method_type:
+            if "struct" in method_type:
                 # Validate the 'struct' parameter.
-                struct = method_type['struct']
+                struct = method_type["struct"]
                 if struct is None:
                     # Fetch the object from the service.
                     response = requests.get(url)
@@ -192,16 +208,13 @@ async def load_by_id(obj_id: UUID, obj_type: RegistryType, method_type: str = No
         # Return the object and its status code.
         result = (obj, response.status_code)
         return result
-        
 
     else:
         url = _BASE_URL
         url += setting[_ONCE] + f"{obj_id}/"
         response = requests.get(url)
 
-    
     if response.status_code == HTTP_200_OK:
-
         try:
             reg = RegistryRead.model_validate_json(response.content)
             obj = setting[_STRUCT].model_validate(reg.data)
@@ -217,11 +230,9 @@ async def load_by_id(obj_id: UUID, obj_type: RegistryType, method_type: str = No
     return result
 
 
-async def save_object(data_to_save, obj_type: RegistryType, *,
-                      project_id=None,
-                      account_id=None,
-                      user_id=None,
-                      object_item=None):
+async def save_object(
+    data_to_save, obj_type: RegistryType, *, project_id=None, account_id=None, user_id=None, object_item=None
+):
     """
     Сохранение данных в реестр.
     :data_to_save: объект для сохранения в реестр
@@ -253,7 +264,7 @@ async def save_object(data_to_save, obj_type: RegistryType, *,
         url += setting[_ONCE]
 
         uuid_reg = uuid4()
-        
+
         data = RegistryCreateUpdate(
             object_type=obj_type,
             name=f"{obj_type}_{uuid_reg}",
@@ -273,11 +284,16 @@ async def save_object(data_to_save, obj_type: RegistryType, *,
     return {"id": id}, response.status_code
 
 
-async def update_by_id(obj_id: UUID, data_to_update, obj_type: RegistryType, *,
-                       project_id=None,
-                       account_id=None,
-                       user_id=None,
-                       object_item=None):
+async def update_by_id(
+    obj_id: UUID,
+    data_to_update,
+    obj_type: RegistryType,
+    *,
+    project_id=None,
+    account_id=None,
+    user_id=None,
+    object_item=None,
+):
     """
     Обновление данных об объекте
     Args:
@@ -296,10 +312,8 @@ async def update_by_id(obj_id: UUID, data_to_update, obj_type: RegistryType, *,
     if obj_type in _POLL_SERVICE_TYPE:
         url = _POLL_SERVICE_URL + setting.get(_MANY) + f"{obj_id}"
 
-
         data = jsonable_encoder(data_to_update)
 
-        
         response = requests.put(url=url, json=data)
         return response.status_code
 
@@ -324,7 +338,6 @@ async def update_by_id(obj_id: UUID, data_to_update, obj_type: RegistryType, *,
         )
 
         response = requests.put(url, data=data.model_dump())
-        
 
     return response.status_code
 
