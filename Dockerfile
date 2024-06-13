@@ -20,7 +20,7 @@ ENV POETRY_VIRTUALENVS_CREATE=false
 
 WORKDIR /app
 COPY pyproject.toml .
-COPY poetry.lock .
+
 
 RUN poetry install --no-dev || poetry install
 RUN poetry add strenum
