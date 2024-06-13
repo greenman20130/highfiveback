@@ -18,6 +18,7 @@ class RegistryType(StrEnum):
 
 class RegistryMeta(BaseModel):
     """Мета данные реестра"""
+
     flags: int
     status: str
     internal_id: int
@@ -25,6 +26,7 @@ class RegistryMeta(BaseModel):
 
 class RegistryRead(BaseModel):
     """Структура объекта реестра, возвращаемого get запросом."""
+
     id: UUID
     object_type: RegistryType
     name: str
@@ -41,6 +43,7 @@ class RegistryRead(BaseModel):
 
 class RegistryCreateUpdate(BaseModel):
     """Структура реестра достаточная для создания нового объекта реестра"""
+
     object_type: RegistryType
     name: str
     object_code: str
@@ -53,6 +56,7 @@ class RegistryCreateUpdate(BaseModel):
 
 class RegistryMultiple(BaseModel):
     """Структура реестра при запросе multiple объекта."""
+
     count: int
     next: Optional[str] = None
     previous: Optional[str] = None

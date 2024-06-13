@@ -12,5 +12,6 @@ class ResultCreateUpdate(BaseModel):
     userId: UUID
     results: dict
 
+
 class ResultRead(ResultCreateUpdate):
     id: Optional[UUID] = None

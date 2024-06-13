@@ -15,7 +15,7 @@ router = APIRouter(prefix="/сompanies", tags=["Company"])
 #     if company.companyId is None:
 #         company.companyId = uuid4()
 #     account_id = company.companyId
-    
+
 #     id, status = await save_object(company, RegistryType.company,
 #                                    account_id=account_id)
 #     response.status_code = status

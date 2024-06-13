@@ -21,19 +21,19 @@ logger = logging.getLogger()
 uvicorn_logger = logging.getLogger("uvicorn.access")
 uvicorn_logger.addFilter(EndpointFilter(path="/ping"))
 
-_LOCAL_HOSTS = 'http://localhost;https://localhost;http://127.0.0.1;https://127.0.0.1'
+_LOCAL_HOSTS = "http://localhost;https://localhost;http://127.0.0.1;https://127.0.0.1"
 
 load_dotenv()
 
 
-TMP_DIR = os.environ.get('TMP_DIR', '/tmp')
-BASE_REGISTRY_URL = os.environ.get('BASE_REGISTRY_URL', 'http://127.0.0.1:8001/api/')
-POLL_SERVICE_URL = os.environ.get('POLL_SERVICE_URL', 'https://api.opros.skroy.ru/')
-USER_SERVICE_URL = os.environ.get('USER_SERVICE_URL', 'https://api.users.skroy.ru/')
-COMMENT_SERVICE_URL = os.environ.get('COMMENT_SERVICE_URL', 'https://api.comment.skroy.ru/')
-COMMENT_TOKEN = os.environ.get('COMMENT_TOKEN')
-COMMENT_SERVICE_ID = os.environ.get('COMMENT_SERVICE_ID')
+TMP_DIR = os.environ.get("TMP_DIR", "/tmp")
+BASE_REGISTRY_URL = os.environ.get("BASE_REGISTRY_URL", "http://127.0.0.1:8001/api/")
+POLL_SERVICE_URL = os.environ.get("POLL_SERVICE_URL", "https://api.opros.skroy.ru/")
+USER_SERVICE_URL = os.environ.get("USER_SERVICE_URL", "https://api.users.skroy.ru/")
+COMMENT_SERVICE_URL = os.environ.get("COMMENT_SERVICE_URL", "https://api.comment.skroy.ru/")
+COMMENT_TOKEN = os.environ.get("COMMENT_TOKEN")
+COMMENT_SERVICE_ID = os.environ.get("COMMENT_SERVICE_ID")
 ALLOWED_ORIGINS = _LOCAL_HOSTS
 origins = os.environ.get("ALLOWED_ORIGINS")
 if origins is not None:
-    ALLOWED_ORIGINS += f';{origins}'
+    ALLOWED_ORIGINS += f";{origins}"

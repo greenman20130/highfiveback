@@ -8,7 +8,7 @@ from src.question.schemas import QuestionCreate
 class PollCreateUpdate(BaseModel):
     userId: UUID
     editorId: Optional[UUID] = None
-    companyId: Optional[UUID] = None 
+    companyId: Optional[UUID] = None
     templateId: UUID
     adminHeading: Optional[str] = None
     adminDescription: Optional[str] = None
@@ -50,6 +50,7 @@ class PollRead(BaseModel):
 
 class PollByUserId(BaseModel):
     """Cтруктура, возвращаемая для просмотра списка опросов пользователя"""
+
     templateId: Optional[UUID] = None
     userId: Optional[UUID] = None
     companyId: Optional[UUID] = None

@@ -14,6 +14,7 @@ from src.company.router import router as router_company
 from src.result.router import router as router_result
 from src.first_init import init_template
 from starlette.middleware.cors import CORSMiddleware
+
 # from starlette_exporter import handle_metrics
 # from starlette_exporter import PrometheusMiddleware
 
@@ -23,9 +24,10 @@ app = FastAPI()
 
 # app.mount("/static", StaticFiles(directory=os.path.join("src", "public")))
 
-origins = ALLOWED_ORIGINS.split(';')
-app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_methods=['*'],
-                   allow_headers=['*'], allow_credentials=True)
+origins = ALLOWED_ORIGINS.split(";")
+app.add_middleware(
+    CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"], allow_credentials=True
+)
 
 # app.include_router(router_poll)
 # app.include_router(router_answer)
@@ -38,7 +40,6 @@ app.include_router(router_chat)
 app.include_router(router_result)
 # app.add_middleware(PrometheusMiddleware)
 # app.add_route("/metrics", handle_metrics)
-
 
 
 @app.on_event("startup")
