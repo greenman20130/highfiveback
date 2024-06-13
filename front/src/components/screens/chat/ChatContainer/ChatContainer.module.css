@@ -1,0 +1,544 @@
+.mainContainer {
+	margin-top: 185px;
+}
+
+.headerContainer {
+	display: flex;
+	justify-content: space-between;
+	margin-right: 400px;
+	height: 50px;
+	border-bottom: 1px solid #e2dfed;
+	> .headerText {
+		font-family: Raleway;
+		font-size: 24px;
+		font-weight: 400;
+		line-height: 31.2px;
+		padding-bottom: 20px;
+		text-align: left;
+		color: #474168;
+		border-bottom: 1px solid #474168;
+	}
+	> .interactionContainer {
+		display: flex;
+		gap: 10px;
+		margin-right: -280px;
+	}
+	> div > .meetingBtn {
+		width: 90px;
+		height: 35px;
+		background-color: #e2dfed33;
+		border: 1px solid #e2dfed;
+		border-radius: 26.67px;
+		transition: background-color 0.2s ease-in-out;
+		align-content: center;
+		color: #474168;
+		font-family: Raleway;
+		font-size: 15px;
+		font-weight: 500;
+		line-height: 12.52px;
+		text-align: center;
+		&:hover {
+			background-color: #e2dfed;
+			cursor: pointer;
+		}
+	}
+	> div > .searchBtn {
+		width: 39px;
+		height: 39px;
+		align-content: center;
+		transition: background-color 0.2s ease-in-out;
+		border: 0.67px solid #e2dfed;
+		border-radius: 26.67px;
+		&:hover {
+			cursor: pointer;
+			background-color: #e2dfed99;
+		}
+	}
+}
+
+.chatContainer {
+	margin-top: 30px;
+	gap: 50px;
+	display: flex;
+	> .dialogWindow {
+		width: 1170px;
+		height: 550px;
+		> .messagesContainer {
+			width: 1170px;
+			height: 550px;
+			flex-wrap: wrap;
+			overflow: scroll;
+			&::-webkit-scrollbar {
+				display: none;
+			}
+			> div {
+				> .dateContainer {
+					display: flex;
+					justify-content: center;
+					margin-top: 30px;
+					> .date {
+						width: fit-content;
+						height: fit-content;
+						padding: 5px 10px 5px 10px;
+						border-radius: 40px;
+						border: 1px solid #e2dfed66;
+						background-color: #e2dfed66;
+						color: #474168;
+						opacity: 0.4;
+						font-family: Raleway;
+						font-size: 16px;
+						font-weight: 400;
+						line-height: 18.78px;
+						text-align: left;
+					}
+				}
+				> .messageContainer {
+					> .messageWrapperLeft {
+						display: flex;
+						margin-top: 20px;
+						> .message {
+							width: fit-content;
+							height: fit-content;
+							word-break: break-all;
+							padding: 12px 40px 12px 20px;
+							gap: 10px;
+							border-radius: 20px 40px 40px 5px;
+							border: 1px solid #e2dfed66;
+							background-color: #e2dfed1a;
+							> .messageText {
+								position: relative;
+								color: #474168;
+								font-family: Raleway;
+								font-size: 16px;
+								font-weight: 400;
+								line-height: 18.78px;
+								text-align: left;
+								> .time {
+									position: absolute;
+									top: -27px;
+									right: -40px;
+									width: fit-content;
+									height: fit-content;
+									font-family: Raleway;
+									font-size: 15px;
+									font-weight: 400;
+									line-height: 9.39px;
+									text-align: left;
+									opacity: 0.3;
+								}
+							}
+						}
+						> .profileImage {
+							align-self: end;
+							margin-right: 20px;
+						}
+					}
+				}
+				> .messageContainer {
+					> .messageWrapperRight {
+						display: flex;
+						justify-content: end;
+						margin-top: 20px;
+						> .myMessage {
+							width: fit-content;
+							height: fit-content;
+							word-break: break-all;
+							justify-self: end;
+							padding: 12px 20px 12px 40px;
+							gap: 10px;
+							border-radius: 40px 20px 5px 40px;
+							border: 1px solid #e2dfed66;
+							background-color: #e2dfed66;
+							> .messageText {
+								position: relative;
+								color: #474168;
+								font-family: Raleway;
+								font-size: 16px;
+								font-weight: 400;
+								line-height: 18.78px;
+								text-align: left;
+								> .time {
+									position: absolute;
+									top: -27px;
+									left: -40px;
+									width: fit-content;
+									height: fit-content;
+									font-family: Raleway;
+									font-size: 15px;
+									font-weight: 400;
+									line-height: 9.39px;
+									text-align: left;
+									opacity: 0.3;
+								}
+							}
+						}
+						> .profileImage {
+							margin-left: 20px;
+							align-content: flex-end;
+						}
+						> .messageText {
+							color: #474168;
+							font-family: Raleway;
+							font-size: 16px;
+							font-weight: 400;
+							line-height: 18.78px;
+							text-align: left;
+						}
+					}
+				}
+			}
+		}
+		> .inputContainer {
+			display: flex;
+			margin-top: 20px;
+			max-width: 1175px;
+			height: 43px;
+			align-content: center;
+			border-radius: 40px;
+			border: 1px solid #e2dfed66;
+			background-color: #e2dfed33;
+			> .addFileBtn {
+				width: 30px;
+				height: 30px;
+				margin-top: 6px;
+				margin-left: 10px;
+				align-content: center;
+				transition: background-color 0.2s ease-in-out;
+				border: 0.67px solid #e2dfed;
+				border-radius: 26.67px;
+				&:hover {
+					cursor: pointer;
+					background-color: #e2dfed99;
+				}
+			}
+			> .formContainer {
+				display: flex;
+
+				> .inputMessage {
+					width: 1050px;
+					height: 19px;
+					margin-top: 10px;
+					font-family: Raleway;
+					margin-left: 20px;
+					outline: none;
+					font-size: 16px;
+					font-weight: 400;
+					line-height: 18.78px;
+					text-align: left;
+					color: #474168;
+					border: none;
+					background-color: #e2dfed1a;
+				}
+				> .sendBtn {
+					width: 30px;
+					height: 30px;
+					margin-top: 6px;
+					margin-left: 20px;
+					align-content: center;
+					transition: background-color 0.2s ease-in-out;
+					border: 0.67px solid #e2dfed;
+					border-radius: 26.67px;
+					&:hover {
+						cursor: pointer;
+						background-color: #e2dfed99;
+					}
+				}
+			}
+		}
+	}
+}
+
+.dialogInfoContainer {
+	display: flex;
+	flex-direction: column;
+	margin-top: -30px;
+	width: 250px;
+	height: fit-content;
+	border-radius: 5px 20px 20px 20px;
+	background-color: #dfede733;
+	border: 1px solid #e2dfed66;
+	padding: 1px 10px;
+	> .userInfoContainer {
+		display: flex;
+		flex-direction: column;
+		height: fit-content;
+		margin-top: 30px;
+		margin-bottom: 30px;
+		> .heading {
+			font-family: Raleway;
+			font-size: 20px;
+			font-weight: 500;
+			line-height: 14.09px;
+			text-align: left;
+			color: #474168;
+			margin-bottom: 10px;
+		}
+		> .textContainer {
+			display: flex;
+			flex-direction: column;
+			.text {
+				font-family: Raleway;
+				font-size: 15px;
+				font-weight: 400;
+				line-height: 15px;
+				margin-top: 18px;
+				text-align: left;
+				color: #474168;
+				opacity: 0.6;
+			}
+		}
+	}
+	> .filesContainer {
+		display: flex;
+		flex-direction: column;
+		height: fit-content;
+		margin-bottom: 30px;
+		> .heading {
+			font-family: Raleway;
+			font-size: 20px;
+			font-weight: 500;
+			line-height: 14.09px;
+			text-align: left;
+			color: #474168;
+			margin-bottom: 10px;
+		}
+		> .text {
+			font-family: Raleway;
+			font-size: 15px;
+			font-weight: 400;
+			line-height: 15px;
+			margin-top: 18px;
+			text-align: left;
+			color: #474168;
+			opacity: 0.6;
+		}
+	}
+	> .tasksContainer {
+		display: flex;
+		flex-direction: column;
+		height: fit-content;
+		margin-bottom: 30px;
+		> .tasksWrapper {
+			display: flex;
+			justify-content: space-between;
+			> .heading {
+				font-family: Raleway;
+				font-size: 20px;
+				font-weight: 500;
+				line-height: 14.09px;
+				text-align: left;
+				color: #474168;
+				margin-bottom: 10px;
+			}
+			> button {
+				width: 20px;
+				height: 20px;
+				padding: 2px;
+				border-radius: 10px;
+				transition: background-color 0.2s ease-in-out;
+				border: 0.17px solid #e2dfed;
+				background-color: #e2dfed33;
+				margin-top: -2px;
+				&:hover {
+					cursor: pointer;
+					background-color: #e2dfed99;
+				}
+			}
+		}
+		> .taskWrapper {
+			display: flex;
+			width: fit-content;
+			height: fit-content;
+			gap: 15px;
+			padding: 2px 0px 2px 0px;
+			border: 1px solid transparent;
+			margin-top: 10px;
+			border-radius: 40px;
+			> div .dateText {
+				font-family: Raleway;
+				font-size: 15px;
+				font-weight: 600;
+				text-align: left;
+				opacity: 0.8;
+				color: #474168;
+			}
+			> div .dateTextChecked {
+				font-family: Raleway;
+				text-decoration: line-through;
+				font-size: 15px;
+				font-weight: 600;
+				text-align: left;
+				opacity: 0.8;
+				color: #474168;
+			}
+			> .text {
+				word-break: break-all;
+				font-family: Raleway;
+				font-size: 15px;
+				font-weight: 400;
+				text-align: left;
+				color: #474168;
+				opacity: 0.6;
+			}
+			> .textChecked {
+				word-break: break-all;
+				font-family: Raleway;
+				text-decoration: line-through;
+				font-size: 15px;
+				font-weight: 400;
+				text-align: left;
+				color: #474168;
+				opacity: 0.6;
+			}
+			> div .checkbox {
+				margin: 0;
+				width: 15px;
+				height: 15px;
+				-webkit-appearance: none;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border: 1px solid #e2dfed;
+				background-color: #e2dfed;
+				border-radius: 40px;
+				margin-top: 3px;
+				margin-right: 5px;
+				&::before {
+					content: '';
+					width: 5px;
+					height: 5px;
+					clip-path: circle(50% at 50% 50%);
+					transform: scale(0);
+					background-color: #474168;
+				}
+				&:checked::before {
+					transform: scale(1);
+				}
+				&:hover {
+					cursor: pointer;
+				}
+			}
+			&:hover {
+				background-color: #e2dfed66;
+			}
+		}
+		> .taskWrapperRed {
+			display: flex;
+			width: fit-content;
+			height: fit-content;
+			gap: 15px;
+			padding: 2px, 0px, 2px, 0px;
+			border: 1px solid #d1544125;
+			background-color: #d1554133;
+			margin-top: 10px;
+			border-radius: 80px 20px 80px 20px;
+			> div .dateText {
+				font-family: Raleway;
+				font-size: 15px;
+				font-weight: 600;
+				color: #d15541;
+				text-align: left;
+				opacity: 0.8;
+			}
+			> div .dateTextChecked {
+				font-family: Raleway;
+				text-decoration: line-through;
+				font-size: 15px;
+				font-weight: 600;
+				color: #d15541;
+				text-align: left;
+				opacity: 0.8;
+			}
+			> .text {
+				word-break: break-all;
+				font-family: Raleway;
+				font-size: 15px;
+				font-weight: 400;
+				text-align: left;
+				color: #d15541;
+				opacity: 0.6;
+			}
+			> .textChecked {
+				word-break: break-all;
+				font-family: Raleway;
+				text-decoration: line-through;
+				font-size: 15px;
+				font-weight: 400;
+				text-align: left;
+				color: #d15541;
+				opacity: 0.6;
+			}
+			> div .checkbox {
+				margin: 0;
+				width: 15px;
+				height: 15px;
+				-webkit-appearance: none;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border: 1px solid #e2dfed;
+				background-color: #e2dfed;
+				border-radius: 40px;
+				margin-top: 3px;
+				margin-right: 5px;
+				&::before {
+					content: '';
+					width: 5px;
+					height: 5px;
+					clip-path: circle(50% at 50% 50%);
+					transform: scale(0);
+					background-color: #474168;
+				}
+				&:checked::before {
+					transform: scale(1);
+				}
+				&:hover {
+					cursor: pointer;
+				}
+			}
+		}
+	}
+	> .commentsContainer {
+		display: flex;
+		flex-direction: column;
+		height: fit-content;
+		margin-top: 20px;
+		> .commentsWrapper {
+			display: flex;
+			justify-content: space-between;
+			> .heading {
+				font-family: Raleway;
+				font-size: 20px;
+				font-weight: 500;
+				line-height: 14.09px;
+				text-align: left;
+				color: #474168;
+				margin-bottom: 10px;
+			}
+			> button {
+				width: 20px;
+				height: 20px;
+				padding: 2px;
+				border-radius: 10px;
+				transition: background-color 0.2s ease-in-out;
+				border: 0.17px solid #e2dfed;
+				background-color: #e2dfed33;
+				margin-top: -2px;
+				&:hover {
+					cursor: pointer;
+					background-color: #e2dfed99;
+				}
+			}
+		}
+		> .text {
+			font-family: Raleway;
+			font-size: 15px;
+			font-weight: 400;
+			line-height: 15px;
+			margin-top: 18px;
+			text-align: left;
+			color: #474168;
+			opacity: 0.6;
+		}
+	}
+}

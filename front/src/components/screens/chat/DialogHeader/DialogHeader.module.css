@@ -1,0 +1,139 @@
+.mainContainer {
+	display: flex;
+	flex-direction: column;
+	margin-top: 185px;
+}
+
+.header {
+	display: block;
+	margin-right: 300px;
+	height: 50px;
+	border-bottom: 1px solid #e2dfed;
+}
+
+.headerText {
+	font-family: Raleway;
+	font-size: 24px;
+	font-weight: 400;
+	line-height: 31.2px;
+	padding-bottom: 20px;
+	text-align: left;
+	color: #474168;
+	border-bottom: 1px solid #474168;
+}
+
+.searchContainer {
+	display: flex;
+	margin-top: 20px;
+	gap: 20px;
+}
+
+.searchBar {
+	display: flex;
+	width: 800px;
+	height: 43px;
+	padding-left: 15px;
+	border: 1px solid #e2dfed66;
+	border-radius: 20px;
+	background-color: #e2dfed1a;
+}
+
+.searchInput {
+	width: 770px;
+	height: 19px;
+	font-family: Raleway;
+	outline: none;
+	margin-top: 12px;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 18.78px;
+	text-align: left;
+	color: #474168;
+	border: none;
+	background-color: #e2dfed1a;
+}
+
+.searchBarButton {
+	width: 39px;
+	height: 39px;
+	align-content: center;
+	transition: background-color 0.2s ease-in-out;
+	border: 0.67px solid #e2dfed;
+	border-radius: 26.67px;
+	margin-left: 28px;
+	margin-top: 2px;
+	&:hover {
+    cursor: pointer;
+    background-color: #e2dfed99;
+  }
+}
+
+.searchDateContainer {
+	display: flex;
+	width: 282px;
+	height: 43px;
+	padding-left: 15px;
+	align-content: center;
+	border: 1px solid #e2dfed66;
+	border-radius: 20px;
+	background-color: #e2dfed1a;
+}
+
+.datePicker {
+	width: 210px;
+	background-color: #e2dfed1a;
+	border: none;
+	outline: none;
+	margin-top: 12px;
+	font-family: Raleway;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 18.78px;
+	text-align: left;
+	color: #474168;
+	&::-webkit-calendar-picker-indicator {
+		background: url('../../../assets/icons/arrow_down.svg');
+		background-size: cover;
+	}
+}
+
+.addBtn {
+	width: 39px;
+	height: 39px;
+	align-content: center;
+	transition: background-color 0.2s ease-in-out;
+	border: 0.67px solid #e2dfed;
+	border-radius: 26.67px;
+	margin-left: 27px;
+	margin-top: 2px;
+	&:hover {
+		cursor: pointer;
+    background-color: #e2dfed99;
+	}
+}
+
+.searchEmployeeContainer {
+	display: flex;
+	width: 252px;
+	height: 43px;
+	padding-left: 15px;
+	align-content: center;
+	border: 1px solid #e2dfed66;
+	border-radius: 20px;
+	background-color: #e2dfed1a;
+}
+
+.searchEmployeeInput {
+	width: 180px;
+	height: 19px;
+	font-family: Raleway;
+	outline: none;
+	margin-top: 12px;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 18.78px;
+	text-align: left;
+	color: #474168;
+	border: none;
+	background-color: #e2dfed1a;
+}

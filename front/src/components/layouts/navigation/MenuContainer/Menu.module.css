@@ -1,0 +1,95 @@
+.menu {
+	border-right: 2px solid;
+	border-right-color: #e2dfed99;
+	height: 450px;
+	margin-top: 55%;
+}
+
+.ul {
+	margin-top: 15%;
+	padding-top: 15%;
+	padding-right: 15%;
+	> li {
+		list-style-type: none;
+		padding: 5px 10px;
+		margin-top: 5px;
+		transition: background-color 0.2s ease-in-out;
+		border-radius: 40px;
+		> a {
+			display: flex;
+			align-items: center;
+			color: #474168;
+			text-decoration: none;
+			> span {
+				margin-left: 5px;
+				font-size: 16px;
+				line-height: 18.78px;
+			}
+		}
+		&:hover {
+			background-color: #e2dfed99;
+			border-radius: 40px;
+		}
+	}
+}
+
+.activeTab {
+	background-color: #e2dfed99;
+}
+
+.inactivePage {
+	opacity: 0.4;
+	pointer-events: none;
+	background-color: white;
+}
+
+.chatContainerTab:nth-child(6) {
+	background-color: #e2dfed99;
+}
+
+.profileInfo {
+	display: flex;
+	margin-left: 50px;
+	margin-top: 80px;
+}
+
+.textContainer {
+	display: flex;
+	flex-direction: column;
+	margin-left: 10px;
+}
+
+.profileName {
+	font-family: 'Raleway', sans-serif;
+	color: #474168;
+	font-size: 20px;
+}
+
+.profileWork {
+	font-family: 'Raleway', sans-serif;
+	color: #474168;
+	font-size: 20px;
+	opacity: 60%;
+}
+
+.exitButton {
+	padding-left: 20%;
+	padding-top: 5%;
+	list-style-type: none;
+	text-decoration: none;
+	> li {
+		list-style-type: none;
+		padding: 5px 10px;
+		> a {
+			display: flex;
+			align-items: center;
+			color: #474168;
+			text-decoration: none;
+			> span {
+				margin-left: 0.75rem;
+				font-size: 22px;
+				line-height: 40px;
+			}
+		}
+	}
+}

@@ -1,0 +1,119 @@
+.mainContainer {
+	display: flex;
+	gap: 200px;
+	margin-top: 10px;
+}
+
+.firstContainer {
+	display: flex;
+	flex-direction: column;
+}
+
+.secondContainer {
+	display: flex;
+	flex-direction: column;
+	> div {
+		text-align: end;
+	}
+}
+
+.citiesContainer {
+	margin-top: 10px;
+	margin-bottom: 60px;
+	display: flex;
+	justify-content: space-between;
+	width: 600px;
+}
+
+.staffContainer {
+	margin-top: 10px;
+	margin-bottom: 60px;
+	display: flex;
+	justify-content: space-between;
+	width: 600px;
+}
+
+.ageStatsContainer {
+	margin-top: 10px;
+	height: 160px;
+	border-radius: 20px;
+	border: 1px solid #e2dfed;
+	background-color: #e2dfed33;
+}
+
+.genderStatsContainer {
+	margin-bottom: 60px;
+	margin-top: 10px;
+	width: 600px;
+	height: 355px;
+	border: 1px solid #e2dfed;
+	background-color: #e2dfed33;
+	border-radius: 20px;
+}
+
+.phaseStatsContainer {
+	margin-top: 10px;
+	display: flex;
+	justify-content: space-between;
+	width: 600px;
+}
+
+.phaseBox {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	width: 160px;
+	height: 160px;
+	border-radius: 40px;
+	background-color: #f6f5e8;
+}
+
+.cityBox {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	width: 160px;
+	height: 130px;
+	border-radius: 40px;
+	background-color: #dfede7;
+}
+
+.staffBox {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	width: 160px;
+	height: 130px;
+	border-radius: 40px;
+	background-color: #f0e5e3;
+}
+
+.textBox {
+	opacity: 0.6;
+}
+
+.text {
+	font-family: Raleway;
+	margin-top: 20px;
+	text-align: center;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 18.78px;
+}
+
+.opacityHeader {
+	font-family: Raleway;
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 14.09px;
+	text-align: left;
+	color: #474168;
+}
+
+.number {
+	font-family: Ubuntu;
+	font-size: 56px;
+	font-weight: 700;
+	line-height: 64.34px;
+	text-align: center;
+}

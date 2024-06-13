@@ -1,0 +1,18 @@
+.scroll__diagramms{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 20px;
+    overflow: hidden;
+
+}
+
+h5{
+    color: #474168;
+    font-size: 9px;
+    font-weight: 400;
+    text-align: center;
+    margin: 0;
+    margin-top: 3px;
+
+}

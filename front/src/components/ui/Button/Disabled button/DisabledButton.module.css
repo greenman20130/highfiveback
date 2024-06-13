@@ -1,0 +1,13 @@
+.disabledButton {
+	transition: fill 0.2s ease-in-out;
+	fill: #e2dfed33;
+	stroke: #e2dfed;
+	> g > path {
+		fill: #474168;
+		stroke: #474168;
+	}
+	&:hover {
+		fill: #e2dfed99;
+		cursor: pointer;
+	}
+}

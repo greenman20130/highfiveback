@@ -1,0 +1,21 @@
+.layout {
+	position: relative;
+	> div:first-child {
+		position: fixed;
+		top: 0px;
+		bottom: 0px;
+		left: 0px;
+		width: 20%;
+		max-width: 300px;
+		border-right-width: 1px;
+		border-right-color: #e2dfed99;
+	}
+}
+
+.containeer__survey {
+	flex: 10;
+}
+
+.center {
+	margin: 8% 0 0 18%;
+}

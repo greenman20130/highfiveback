@@ -1,0 +1,15 @@
+.logo {
+	font-family: 'Ubuntu', sans-serif;
+	font-weight: 700;
+	color: #474168;
+	font-size: 23.28px;
+	padding-left: 5rem;
+	padding-right: 2.75rem;
+	margin-bottom: 2.5rem;
+	display: block;
+}
+
+.navigation {
+	padding-top: 2.75rem;
+	padding-bottom: 2.75rem;
+}

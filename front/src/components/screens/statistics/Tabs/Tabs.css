@@ -1,0 +1,91 @@
+/* Tab Container */
+.main__tabs {
+	/* background: #053742; */
+	/* color: #E8F0F2; */
+	/* border-radius: 2rem; */
+	@media (max-width: 769px) {
+		padding: 2rem 0;
+	}
+}
+
+.wrapper__tabs__reports {
+	display: flex;
+	flex-direction: column;
+	gap: 0px;
+}
+
+.wrapper__report__nav {
+	width: 1180px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	border-bottom: 1px solid #e2dfed;
+}
+
+/* Tab Navigation */
+ul.nav {
+	width: 60%;
+	margin: 0 0 0;
+	display: flex;
+	font-size: 24px;
+	color: rgba(71, 65, 104, 0.6);
+	/* border: 1px solid #39A2DB; */
+	/* border-radius: 2rem; */
+	@media (max-width: 768px) {
+		width: 90%;
+	}
+}
+ul.nav li {
+	font-family: Raleway;
+	margin-right: 20px;
+	padding-bottom: 20px;
+	list-style: none;
+	cursor: pointer;
+	transition: all 0.7s;
+	/* border-bottom-left-radius: 2rem;
+  border-top-left-radius: 2rem; */
+}
+/* ul.nav li:nth-child(4) {
+  border-radius: 0;
+  border-bottom-right-radius: 2rem;
+  border-top-right-radius: 2rem;
+}*/
+
+ul.nav li:hover {
+	background: rgba(87, 61, 78, 0.15);
+}
+ul.nav li.active {
+	border-bottom: 1px solid #474168;
+	opacity: 1;
+	color: #474168;
+}
+
+/* First and Second Tab Styles */
+.FirstTab p,
+.SecondTab p {
+	font-size: 2rem;
+	text-align: center;
+}
+
+/* .window__tab{
+  position: absolute;
+  background-color: #053742;
+
+} */
+
+.div__report {
+	border-radius: 20px;
+	border: 1px solid #e2dfed;
+}
+
+.div__report__h4 {
+	color: #474168;
+	font-weight: 400;
+	font-size: 9px;
+}
+
+.report__section {
+	display: flex;
+	flex-direction: row;
+	gap: 40px;
+}

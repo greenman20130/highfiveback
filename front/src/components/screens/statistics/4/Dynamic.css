@@ -1,0 +1,31 @@
+.report__section {
+    /* color: #474168; */
+    opacity: .6;
+    text-align: left;
+
+}
+
+/* .div__report{
+    padding: 20px 20px;
+} */
+
+.div__report > p{
+    text-align: left;
+    margin: 20px 18px;
+
+}
+
+.div__report > strong{
+    text-align: left;
+    margin: 20px 18px;
+    font-size: 9px;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    
+
+}
+/* p{
+    text-align: left;
+
+} */
