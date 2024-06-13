@@ -67,9 +67,8 @@ async def get_result_by_answer(answer_id: UUID, response: Response):
 
     for rg_key, rg_value in dict_results.items():
         global_result += rg_value
-    
     for g_key, g_value in global_key.items():
-        if global_result in range(g_value[0], g_value[1]):
+        if global_result in range(g_value[0], g_value[1]+1):
             results['result'] = g_key   
 
     return results
