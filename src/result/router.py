@@ -7,7 +7,7 @@ import requests
 from src.config import POLL_SERVICE_URL, USER_SERVICE_URL
 
 from src.result.schemas import ResultRead, ResultCreateUpdate
-from src.registry.crud import load_by_id, save_object, load_objects, update_by_id, load_counts
+
 from src.registry.schemas import RegistryType
 
 _POLL_SERVICE_URL = POLL_SERVICE_URL

@@ -7,13 +7,7 @@ from pydantic import BaseModel
 
 
 class RegistryType(StrEnum):
-    template = "template"
-    poll = "poll"
-    answer = "answer"
-    user = "user"
-    company = "company"
     chat = "chat"
-    result = "result"
 
 
 class RegistryMeta(BaseModel):
@@ -41,6 +35,7 @@ class RegistryRead(BaseModel):
 
 class RegistryCreateUpdate(BaseModel):
     """Структура реестра достаточная для создания нового объекта реестра"""
+    id: UUID
     object_type: RegistryType
     name: str
     object_code: str
