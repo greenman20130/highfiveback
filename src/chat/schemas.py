@@ -15,7 +15,7 @@ class ChatCreateUpdate(BaseModel): #анонимный чат
     comment_text: str 
     user: ChatUser
     parent_id: int = None 
-    scope: str = 'all, admin, registered'
+    anonymous: bool
 
 
 class ChatRead(ChatCreateUpdate):
@@ -23,6 +23,8 @@ class ChatRead(ChatCreateUpdate):
 
 
 class ChatUsers(BaseModel):
-    chatId: UUID
-    first_user: UUID
-    second_user: UUID
+    user_id: UUID
+    anonymous: bool
+    chat_name: str
+    hr_last_check: str
+    employee_last_check: str

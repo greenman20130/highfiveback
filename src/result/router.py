@@ -97,11 +97,9 @@ async def get_poll_statistics(poll_id: UUID, response: Response):
     users = poll['questions']
     for user in users:
         options = user['options']
-        print(options)
         user_info = options[0]
         user_info = user_info['value']
         user_info = user_info.replace("true", 'True')
-        print(user_info)
         user_info = eval(user_info)
         additional_info = user_info['additional_info']
         point = eval(user['description'])
