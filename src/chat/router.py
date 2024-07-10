@@ -112,8 +112,6 @@ async def get_chat_HR(response: Response, company_id: UUID,
 
         response = requests.get(url)
         obj = response.text
-        print(chats)
-        print(obj)
         chat = json.loads(obj)
         len_chat = len(chat)
         if len_chat:
@@ -192,9 +190,10 @@ async def post_chat(chat: ChatCreateUpdate, response: Response, company_id: UUID
         chat_id = chat_id['chatId']
     
     if data['anonymous']:
-        data['user']['id'] = None
-        data['user']['first_name'] = None
-        data['user']['last_name'] = None
+        if data['user']['external_id'] == user_id:
+            data['user']['id'] = None
+            data['user']['first_name'] = None
+            data['user']['last_name'] = None
 
     key = f'{str(_COMMENT_SERVICE_ID)}{str(company_id)}{str(user_id)}'
     data['signature'] = hmac.new(bytearray(COMMENT_TOKEN, 'utf-8'), bytearray(key, 'utf-8'), hashlib.sha1).hexdigest()
