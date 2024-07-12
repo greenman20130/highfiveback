@@ -68,7 +68,13 @@ async def get_chat(response: Response, company_id: UUID, user_id: UUID,
             comment_text = last_message['comment_text']
             date_created = last_message['date_created']
             anonymous = chats['anonymous']
-            result = {'chatName' : f'{chat_name}',
+            for user in chat:
+                user_id = user['user']['external_id']
+                if user_id != company_id:
+                    break
+                
+            result = {'userId': f'{user_id}',
+                    'chatName' : f'{chat_name}',
                     'lastMessage' : f'{comment_text}',
                     'lastMessageDate' : f'{date_created}',
                     'employeeLastCheck' : f'{employee_last_check}',
@@ -122,7 +128,13 @@ async def get_chat_HR(response: Response, company_id: UUID,
             hr_last_check = chats['hr_last_check']
             employee_last_check = chats['employee_last_check']
             anonymous = chats['anonymous']
-            result = {'chatName' : f'{chat_name}',
+            for user in chat:
+                user_id = user['user']['external_id']
+                if user_id != company_id:
+                    break
+                
+            result = {'userId': f'{user_id}',
+                    'chatName' : f'{chat_name}',
                     'lastMessage' : f'{comment_text}',
                     'lastMessageDate' : f'{date_created}',
                     'employeeLastCheck' : f'{employee_last_check}',
