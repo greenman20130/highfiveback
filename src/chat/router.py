@@ -68,10 +68,7 @@ async def get_chat(response: Response, company_id: UUID, user_id: UUID,
             comment_text = last_message['comment_text']
             date_created = last_message['date_created']
             anonymous = chats['anonymous']
-            for user in chat:
-                user_id = user['user']['external_id']
-                if user_id != company_id:
-                    break
+            user_id = chats['user_id']
                 
             result = {'userId': f'{user_id}',
                     'chatName' : f'{chat_name}',
@@ -199,7 +196,7 @@ async def post_chat(chat: ChatCreateUpdate, response: Response, company_id: UUID
     
     else:
         chat_id = find_chat[0]
-        chat_id = chat_id['chatId']
+        chat_id = chat_id['user_id']
     
     if data['anonymous']:
         if data['user']['external_id'] == user_id:
