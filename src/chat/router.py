@@ -58,7 +58,12 @@ async def get_chat(response: Response, company_id: UUID, user_id: UUID,
 
         response = requests.get(url)
         obj = response.text
-        chat = json.loads(obj)
+        messages = json.loads(obj)
+        chat = []
+        for message in messages:
+            if message["is_deleted"] is False:
+                chat.append(message)
+
         len_chat = len(chat)
         if len_chat:
             chat_name = chats['chat_name']
@@ -175,7 +180,7 @@ async def post_chat(chat: ChatCreateUpdate, response: Response, company_id: UUID
             find_chat_name, status = await load_objects(RegistryType.chat, filter_options = f'?account_id={company_id}&meta_status=active&search=Свободный диалог')
             len_chats = len(find_chat_name)
             if len_chats > 0:
-                chat_name_counter = find_chat_name[len_chats-1]['chat_name']
+                chat_name_counter = find_chat_name[0]['chat_name']
                 chat_name_counter = chat_name_counter.replace('Свободный диалог ', '')
                 chat_name_counter = int(chat_name_counter)
                 chat_name_counter += 1
@@ -244,6 +249,17 @@ async def read_chat(response: Response, company_id: UUID, user_id: UUID, read: s
     obj = json.loads(obj)
     return obj
 
+@router.delete("/{company_id}/{user_id}/{message_id}")
+async def delete_message(response: Response, company_id: UUID, user_id: UUID, message_id: int):
+    url = f'{_COMMENT_SERVICE_URL}{_COMMENT_SERVICE_ID}/{company_id}/{user_id}/{message_id}/'
+    key = f'{str(_COMMENT_SERVICE_ID)}{str(company_id)}{str(user_id)}'
+    #key = hmac.new(bytearray(COMMENT_TOKEN, 'utf-8'), bytearray(key, 'utf-8'), hashlib.sha1).hexdigest()
+    data = {"signature": hmac.new(bytearray(COMMENT_TOKEN, 'utf-8'), bytearray(key, 'utf-8'), hashlib.sha1).hexdigest()}
+    data = json.dumps(data)
+    data = json.loads(data)
+    response = requests.delete(url=url, json=data)
+
+    return response.status_code
 
 # @router.put("/{data_type}/{item_id}/comment_id/")
 # async def put_chat(chat: ChatCreateUpdate, response: Response, service_id: UUID, data_type: UUID, item_id: UUID, comment_id: UUID):
