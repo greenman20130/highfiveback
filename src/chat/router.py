@@ -35,6 +35,8 @@ async def get_chat(response: Response, company_id: UUID, user_id: UUID,
     """    
     find_chats, status = await load_objects(RegistryType.chat, filter_options = f'?search={user_id}&account_id={company_id}&meta_status=active')
     dialogs = []
+    if find_chats == None or len(find_chats) == 0:
+        return {"message": "No active chats found"}
     for chats in find_chats:
         chat_id = chats['user_id']
         # if user_id == chats['first_user']:
@@ -103,6 +105,8 @@ async def get_chat_HR(response: Response, company_id: UUID,
     """    
     find_chats, status = await load_objects(RegistryType.chat, filter_options = f'?account_id={company_id}&meta_status=active')
     dialogs = []
+    if find_chats == None or len(find_chats) == 0:
+        return {"message": "No active chats found"}
     for chats in find_chats:
         chat_id = chats['user_id']
         key = f'{str(_COMMENT_SERVICE_ID)}{str(company_id)}{str(chat_id)}'
@@ -120,7 +124,11 @@ async def get_chat_HR(response: Response, company_id: UUID,
 
         response = requests.get(url)
         obj = response.text
-        chat = json.loads(obj)
+        messages = json.loads(obj)
+        chat = []
+        for message in messages:
+            if message["is_deleted"] is False:
+                chat.append(message)
         len_chat = len(chat)
         if len_chat:
             chat_name = chats['chat_name']
